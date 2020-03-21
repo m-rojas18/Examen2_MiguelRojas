@@ -1,51 +1,65 @@
 package lab10_miguelrojas;
 
-public class ATM {
+import java.io.Serializable;
 
+public class ATM implements Serializable {
+    
     private String ubicacion;
-    private String id_atm;
-    private String aFabricacion;
-    private String tiempoMantenimiento;
+    private String id;
+    private int aFabricacion;
+    private int tiempoMantenimiento; // meses
+    private int saldo;
+    
+    private static final long serialVersionUID = 111L;
 
-    public ATM(String ubicacion, String id_atm, String aFabricacion, String tiempoMantenimiento) {
+    public ATM(String ubicacion, String id, int aFabricacion, int tiempoMantenimiento) {
         this.ubicacion = ubicacion;
-        this.id_atm = id_atm;
+        this.id = id;
         this.aFabricacion = aFabricacion;
         this.tiempoMantenimiento = tiempoMantenimiento;
+        saldo = 10000;
     }
     
-    //Mutadores
-    //Ubicacion
+    // Mutadores
+    // ubicación
     public String getUbicacion() {
         return ubicacion;
     }
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
-    //Id Atm
-    public String getId_atm() {
-        return id_atm;
+    // id
+    public String getID() {
+        return id;
     }
-    public void setId_atm(String id_atm) {
-        this.id_atm = id_atm;
+    public void setID(String id) {
+        this.id = id;
     }
-    //Año de Fabricación
-    public String getaFabricacion() {
+    // año de fabricación
+    public int getaFabricacion() {
         return aFabricacion;
     }
-    public void setaFabricacion(String aFabricacion) {
+    public void setaFabricacion(int aFabricacion) {
         this.aFabricacion = aFabricacion;
     }
-    //Tiempo de Mantenimiento
-    public String getTiempoMantenimiento() {
+    // tiempo de mantenimiento
+    public int getTiempoMantenimiento() {
         return tiempoMantenimiento;
     }
-    public void setTiempoMantenimiento(String tiempoMantenimiento) {
+    public void setTiempoMantenimiento(int tiempoMantenimiento) {
         this.tiempoMantenimiento = tiempoMantenimiento;
+    }
+    // saldo
+    public int getSaldo() {
+        return saldo;
+    }
+    public void setSaldo(int saldo) {
+        this.saldo = saldo;
     }
 
     @Override
     public String toString() {
-        return ubicacion + "," + id_atm;
-    }  
+        return ubicacion + ", " + id;
+    }
+    
 }

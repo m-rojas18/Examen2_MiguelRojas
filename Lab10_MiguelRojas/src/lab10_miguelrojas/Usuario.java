@@ -1,18 +1,24 @@
 package lab10_miguelrojas;
 
-public class Usuario {
-    
-    private String id_usuario;
-    private String primerNombre;
-    private String segundoNombre;
-    private String primerApellido;
-    private String segundoApellido;
-    private String pwd;
-    private String aNacimiento;
-    private String aAfiliacion;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-    public Usuario(String id_usuario, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, String pwd, String aNacimiento, String aAfiliacion) {
-        this.id_usuario = id_usuario;
+public class Usuario implements Serializable {
+    
+    protected String id;
+    protected String primerNombre;
+    protected String segundoNombre;
+    protected String primerApellido;
+    protected String segundoApellido;
+    protected String pwd;
+    protected int aNacimiento;
+    protected int aAfiliacion;
+    protected ArrayList<Transaccion> transacciones;
+    
+    private static final long serialVersionUID = 222L;
+
+    public Usuario(String id, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, String pwd, int aNacimiento, int aAfiliacion) {
+        this.id = id;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
         this.primerApellido = primerApellido;
@@ -21,66 +27,75 @@ public class Usuario {
         this.aNacimiento = aNacimiento;
         this.aAfiliacion = aAfiliacion;
     }
-    //Mutadores
-    //Usuario
-    public String getId_usuario() {
-        return id_usuario;
+    
+    // Mutadores
+    // id
+    public String getID() {
+        return id;
     }
-    public void setId_usuario(String id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setID(String id) {
+        this.id = id;
     }
-    //Primer Nombre
+    // primer nombre
     public String getPrimerNombre() {
         return primerNombre;
     }
     public void setPrimerNombre(String primerNombre) {
         this.primerNombre = primerNombre;
     }
-    //Segundo Nombre
+    // segundo nombre
     public String getSegundoNombre() {
         return segundoNombre;
     }
     public void setSegundoNombre(String segundoNombre) {
         this.segundoNombre = segundoNombre;
     }
-    //Primer Apellido
+    // primer apellido
     public String getPrimerApellido() {
         return primerApellido;
     }
     public void setPrimerApellido(String primerApellido) {
         this.primerApellido = primerApellido;
     }
-    //Segundo Apellido
+    // segundo apellido
     public String getSegundoApellido() {
         return segundoApellido;
     }
     public void setSegundoApellido(String segundoApellido) {
         this.segundoApellido = segundoApellido;
     }
-    //Password
+    // password
     public String getPwd() {
         return pwd;
     }
     public void setPwd(String pwd) {
         this.pwd = pwd;
     }
-    //Ano Nacimiento
-    public String getaNacimiento() {
+    // año de nacimiento
+    public int getaNacimiento() {
         return aNacimiento;
     }
-    public void setaNacimiento(String aNacimiento) {
+    public void setaNacimiento(int aNacimiento) {
         this.aNacimiento = aNacimiento;
     }
-    //Año Afiliacion
-    public String getaAfiliacion() {
+    // año de afiliación
+    public int getaAfiliacion() {
         return aAfiliacion;
     }
-    public void setaAfiliacion(String aAfiliacion) {
+    public void setaAfiliacion(int aAfiliacion) {
         this.aAfiliacion = aAfiliacion;
+    }
+    // transacciones
+    public Transaccion getTX(int i) {
+        return transacciones.get(i);
+    }
+    public void setTransaccion(Transaccion TX) {
+        transacciones.add(TX);
     }
 
     @Override
     public String toString() {
-        return id_usuario;
-    }   
+        return id;
+    }
+    
 }
