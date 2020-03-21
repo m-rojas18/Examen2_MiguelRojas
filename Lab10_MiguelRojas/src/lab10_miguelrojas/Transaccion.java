@@ -1,19 +1,21 @@
 package lab10_miguelrojas;
 
-public class Transaccion {
+import java.io.Serializable;
+
+public class Transaccion implements Serializable {
     
     private String numero_cuenta;
     private String descripcion;
-    private String fecha;
-    private String id_usuario;
+    private String fechaHora;
+    private int id;
 
     private static final long serialVersionUID = 666L;
 
-    public Transaccion(String numero_cuenta, String descripcion, String fecha, String id_usuario) {
+    public Transaccion(String numero_cuenta, String descripcion, String fechaHora, int id) {
         this.numero_cuenta = numero_cuenta;
         this.descripcion = descripcion;
-        this.fecha = fecha;
-        this.id_usuario = id_usuario;
+        this.fechaHora = fechaHora;
+        this.id = id;
     }
 
     // número de cuenta
@@ -30,19 +32,19 @@ public class Transaccion {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    // fecha
-    public String getFecha() {
-        return fecha;
+    // fecha y hora
+    public String getFechaHora() {
+        return fechaHora;
     }
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setFechaHora(String fechaHora) {
+        this.fechaHora = fechaHora;
     }
-    // id usuario
-    public String getId_usuario() {
-        return id_usuario;
+    // id
+    public int getId() {
+        return id;
     }
-    public void setId_usuario(String id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setId(int id_usuario) {
+        this.id = id_usuario;
     }
     
 }

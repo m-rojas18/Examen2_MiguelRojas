@@ -1,9 +1,12 @@
 package lab10_miguelrojas;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class Main extends javax.swing.JFrame {
@@ -15,6 +18,7 @@ public class Main extends javax.swing.JFrame {
         updateComboBoxATMs();
         adminCliente.cargar();
         adminMantenimiento.cargar();
+        adminLogInicioSesion.cargar();
     }
     
     @SuppressWarnings("unchecked")
@@ -96,6 +100,7 @@ public class Main extends javax.swing.JFrame {
         tf_billetes100 = new javax.swing.JTextField();
         tf_billetes500 = new javax.swing.JTextField();
         b_ingresarBilletes = new javax.swing.JButton();
+        l_hora6 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cb_ATMs = new javax.swing.JComboBox<>();
@@ -496,6 +501,11 @@ public class Main extends javax.swing.JFrame {
         m_deposito.add(mi_cuentaPropia);
 
         mi_transferencia.setText("Transferencia");
+        mi_transferencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_transferenciaActionPerformed(evt);
+            }
+        });
         m_deposito.add(mi_transferencia);
 
         mb_acciones_ventanaCliente.add(m_deposito);
@@ -503,6 +513,11 @@ public class Main extends javax.swing.JFrame {
         m_crearCuenta.setText("Crear Cuenta");
 
         mi_nuevaCuenta.setText("Nueva Cuenta");
+        mi_nuevaCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_nuevaCuentaActionPerformed(evt);
+            }
+        });
         m_crearCuenta.add(mi_nuevaCuenta);
 
         mb_acciones_ventanaCliente.add(m_crearCuenta);
@@ -510,6 +525,11 @@ public class Main extends javax.swing.JFrame {
         m_revisarEstado.setText("Revisar Estado");
 
         mi_revisarEstado_cuentaPropia.setText("Cuenta Propia");
+        mi_revisarEstado_cuentaPropia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_revisarEstado_cuentaPropiaActionPerformed(evt);
+            }
+        });
         m_revisarEstado.add(mi_revisarEstado_cuentaPropia);
 
         mb_acciones_ventanaCliente.add(m_revisarEstado);
@@ -517,6 +537,11 @@ public class Main extends javax.swing.JFrame {
         m_revisarTransacciones.setText("Revisar Transacciones");
 
         mi_revisarTransacciones_cuentaPropia.setText("Cuenta Propia");
+        mi_revisarTransacciones_cuentaPropia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_revisarTransacciones_cuentaPropiaActionPerformed(evt);
+            }
+        });
         m_revisarTransacciones.add(mi_revisarTransacciones_cuentaPropia);
 
         mb_acciones_ventanaCliente.add(m_revisarTransacciones);
@@ -548,6 +573,13 @@ public class Main extends javax.swing.JFrame {
         l_billetes500.setText("Cantidad de billetes de Lps. 500");
 
         b_ingresarBilletes.setText("Ingresar Billetes");
+        b_ingresarBilletes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_ingresarBilletesActionPerformed(evt);
+            }
+        });
+
+        l_hora6.setText("l_hora6");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -557,7 +589,10 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel5)
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(l_hora6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel6Layout.createSequentialGroup()
                             .addComponent(l_billetes100)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -573,7 +608,9 @@ public class Main extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(l_hora6))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_billetes100)
@@ -887,7 +924,7 @@ public class Main extends javax.swing.JFrame {
                 
                 int resp = 0;
                 while (resp != 1) {
-                    int pos = Integer.parseInt(JOptionPane.showInputDialog(d_crearUsuario, "ATMs\n" + listaATMs + "Ingrese la posición del ATM que desea agregar."));
+                    int pos = Integer.parseInt(JOptionPane.showInputDialog(d_crearUsuario, "ATMs\n" + listaATMs + "Ingrese la posición del ATM que desea agregar:"));
                     
                     mantenimiento.addATM(adminATM.getATM(pos));
                     JOptionPane.showMessageDialog(d_crearUsuario, "El ATM fue agregado exitosamente.");
@@ -961,14 +998,16 @@ public class Main extends javax.swing.JFrame {
                         if (pwd.equals(pwdCliente)) {
                             client = cliente;
                             intentos = 5;
-                            // TODO: Abrir la ventana de Cliente
-                            // TODO: Generar log de inicio de sesión
+                            
+                            // Generar log de inicio de sesión
+                            generarLogInicioSesion(cliente.getPrimerNombre(), "Inicio de sesión exitoso", l_hora4);
                             
                             tf_primerNombre_iniciarSesion.setText("");
                             pf_pwd_iniciarSesion.setText("");
                             
                             d_iniciarSesion.dispose();
                             
+                            // Abrir la ventana de Cliente
                             d_ventanaCliente.setModal(true);
                             d_ventanaCliente.pack();
                             d_ventanaCliente.setLocationRelativeTo(d_iniciarSesion);
@@ -980,7 +1019,8 @@ public class Main extends javax.swing.JFrame {
                             pf_pwd_iniciarSesion.setText("");
                             intentos--;
                             if (intentos == 0) {
-                                // TODO: Generar el log por fallar 5 veces
+                                // Generar el log por fallar 5 veces
+                                generarLogFallo(primerNombre, "Cinco intentos fallidos", l_hora4);
                             }
                         }
                     }
@@ -989,7 +1029,8 @@ public class Main extends javax.swing.JFrame {
                 if (!encontroPN) {
                     JOptionPane.showMessageDialog(d_iniciarSesion, "No se encontró ningún Cliente con ese nombre.", "Iniciar Sesión - Cliente", JOptionPane.WARNING_MESSAGE);
                     tf_primerNombre_iniciarSesion.setText("");
-                    // TODO: Generar log por no haber encontrado ningún usuario con ese nombre
+                    // Generar log por no haber encontrado ningún usuario con ese nombre
+                    generarLogFallo(primerNombre, "Usuario no encontrado", l_hora4);
                 }
             } else {
                 boolean encontroPN = false;
@@ -1001,20 +1042,29 @@ public class Main extends javax.swing.JFrame {
                         if (pwd.equals(pwdMantenimiento)) {
                             maintenance = mantenimiento;
                             intentos = 5;
-                            // TODO: Abrir la ventana de Mantenimiento
-                            // TODO: Generar log de inicio de sesión
+                            
+                            // Generar log de inicio de sesión
+                            generarLogInicioSesion(mantenimiento.getPrimerNombre(), "Inicio de sesión exitoso", l_hora4);
                             
                             tf_primerNombre_iniciarSesion.setText("");
                             pf_pwd_iniciarSesion.setText("");
             
                             d_iniciarSesion.dispose();
+                            
+                            // Abrir la ventana de Mantenimiento
+                            d_ventanaMantenimiento.setModal(true);
+                            d_ventanaMantenimiento.pack();
+                            d_ventanaMantenimiento.setLocationRelativeTo(d_iniciarSesion);
+                            d_ventanaMantenimiento.setVisible(true);
+                            
                             break;
                         } else {
                             JOptionPane.showMessageDialog(d_iniciarSesion, "La contraseña es incorrecta.");
                             pf_pwd_iniciarSesion.setText("");
                             intentos--;
                             if (intentos == 0) {
-                                // TODO: Generar el log por fallar 5 veces
+                                // Generar el log por fallar 5 veces
+                                generarLogFallo(primerNombre, "Cinco intentos fallidos", l_hora4);
                             }
                         }
                     }
@@ -1023,7 +1073,8 @@ public class Main extends javax.swing.JFrame {
                 if (!encontroPN) {
                     JOptionPane.showMessageDialog(d_iniciarSesion, "No se encontró ningún Usuario de Mantenimiento con ese nombre.", "Iniciar Sesión - Cliente", JOptionPane.WARNING_MESSAGE);
                     tf_primerNombre_iniciarSesion.setText("");
-                    // TODO: Generar log por no haber encontrado ningún usuario con ese nombre
+                    // Generar log por no haber encontrado ningún usuario con ese nombre
+                    generarLogFallo(primerNombre, "Usuario no encontrado", l_hora4);
                 }
             }
         }
@@ -1041,11 +1092,19 @@ public class Main extends javax.swing.JFrame {
         int retiro = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "Ingrese la cantidad de dinero que desea retirar:"));
         if (atmSistema.getSaldo() < retiro) {
             JOptionPane.showMessageDialog(d_ventanaCliente, "El saldo es insuficiente para realizar el retiro.", "Retiro", JOptionPane.INFORMATION_MESSAGE);
-            // TODO: Generar log por fallo en la transacción
+            // Generar log por fallo en la transacción
+            generarLogFallo(client.getPrimerNombre(), "Saldo insuficiente para realizar retiro en ATM " + atmSistema, l_hora5);
         } else {
             atmSistema.setSaldo(atmSistema.getSaldo() - retiro);
+            adminATM.escribir();
             JOptionPane.showMessageDialog(d_ventanaCliente, "El retiro se realizó exitosamente.", "Retiro", JOptionPane.INFORMATION_MESSAGE);
-            // TODO: Generar log por transacción exitosa
+            // Generar log por transacción exitosa
+            generarLogRetiro(client.getPrimerNombre(), "Retiro de Lps. " + retiro + " en ATM " + atmSistema, l_hora5);
+            // Generar transacción
+            client.addTX(new Transaccion("N/A", "Retiro de Lps. " + retiro + " en ATM " + atmSistema, generarFechaHora(l_hora5), client.transacciones.size()));
+            adminCliente.escribir();
+            
+            d_ventanaCliente.dispose();
         }
     }//GEN-LAST:event_mi_atmActionPerformed
 
@@ -1060,10 +1119,115 @@ public class Main extends javax.swing.JFrame {
         int deposito = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "Ingrese la cantidad de dinero que desea depositar:"));
         
         cuenta.setSaldo(cuenta.getSaldo() + deposito);
+        adminCliente.escribir();
         
         JOptionPane.showMessageDialog(d_ventanaCliente, "El depósito se realizó exitosamente.", "Depósito", JOptionPane.INFORMATION_MESSAGE);
-        // TODO: Generar log por transacción exitosa
+        // Generar transacción
+        client.addTX(new Transaccion(cuenta.getNum_cuenta(), "Depósito de Lps. " + deposito, generarFechaHora(l_hora5), client.transacciones.size()));
+        adminCliente.escribir();
+        
+        d_ventanaCliente.dispose();
     }//GEN-LAST:event_mi_cuentaPropiaActionPerformed
+
+    private void mi_transferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_transferenciaActionPerformed
+        // Escoge el Cliente
+        String listaClientes = "";
+        for (Cliente cliente : adminCliente.clientes)
+            listaClientes += adminCliente.clientes.indexOf(cliente) + ". " + cliente.getPrimerNombre() + "\n";
+        int pos1 = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "CLIENTES\n" + listaClientes + "Ingrese la posición del Cliente al que le desea depositar:"));
+        Cliente cliente = adminCliente.getCliente(pos1);
+        
+        // Escoge una Cuenta del Cliente
+        String listaCuentas = "";
+        for (Cuenta cuenta : cliente.cuentas)
+            listaCuentas += cliente.cuentas.indexOf(cuenta) + ". " + cuenta + "\n";
+        int pos2 = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "CUENTAS\n" + listaCuentas + "Ingrese la posición de la cuenta a la que le desea depositar:"));
+        Cuenta cuenta = client.getCuenta(pos2);
+        
+        // Ingresa la cantidad a depositar
+        int deposito = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "Ingrese la cantidad de dinero que desea depositar:"));
+        
+        cuenta.setSaldo(cuenta.getSaldo() + deposito);
+        adminCliente.escribir();
+        
+        JOptionPane.showMessageDialog(d_ventanaCliente, "La transferencia se realizó exitosamente.", "Transferencia", JOptionPane.INFORMATION_MESSAGE);
+        // Generar transacción
+        client.addTX(new Transaccion(cuenta.getNum_cuenta(), "Transferencia de Lps. " + deposito, generarFechaHora(l_hora5), client.transacciones.size()));
+        adminCliente.escribir();
+        
+        d_ventanaCliente.dispose();
+    }//GEN-LAST:event_mi_transferenciaActionPerformed
+
+    private void mi_nuevaCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_nuevaCuentaActionPerformed
+        // Escoge el Cliente
+        String listaClientes = "";
+        for (Cliente cliente : adminCliente.clientes)
+            listaClientes += adminCliente.clientes.indexOf(cliente) + ". " + cliente.getPrimerNombre() + "\n";
+        int pos1 = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "CLIENTES\n" + listaClientes + "Ingrese la posición del Cliente al que le desea agregar Cuentas:"));
+        Cliente cliente = adminCliente.getCliente(pos1);
+
+        int resp = 0;
+        while (resp != 1) {
+            String num_cuenta = JOptionPane.showInputDialog(d_ventanaCliente, "Ingrese el número de cuenta:");
+            int saldo = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "Ingrese el saldo:"));
+
+            Cuenta cuenta = new Cuenta(num_cuenta, saldo, cliente.getID());
+            cliente.addCuenta(cuenta);
+            JOptionPane.showMessageDialog(d_ventanaCliente, "La Cuenta fue agregada exitosamente.");
+
+            resp = JOptionPane.showConfirmDialog(d_ventanaCliente, "¿Desea agregar otra Cuenta?");
+        }
+
+        adminCliente.escribir();
+        
+        d_ventanaCliente.dispose();
+    }//GEN-LAST:event_mi_nuevaCuentaActionPerformed
+
+    private void mi_revisarEstado_cuentaPropiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_revisarEstado_cuentaPropiaActionPerformed
+        // Escoge el Cliente
+        String listaClientes = "";
+        for (Cliente cliente : adminCliente.clientes)
+            listaClientes += adminCliente.clientes.indexOf(cliente) + ". " + cliente.getPrimerNombre() + "\n";
+        int pos1 = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "CLIENTES\n" + listaClientes + "Ingrese la posición del Cliente:"));
+        Cliente cliente = adminCliente.getCliente(pos1);
+        
+        // Escoge una Cuenta del Cliente
+        String listaCuentas = "";
+        for (Cuenta cuenta : cliente.cuentas)
+            listaCuentas += cliente.cuentas.indexOf(cuenta) + ". " + cuenta + "\n";
+        int pos2 = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "CUENTAS\n" + listaCuentas + "Ingrese la posición de la cuenta:"));
+        Cuenta cuenta = client.getCuenta(pos2);
+        
+        JOptionPane.showMessageDialog(d_ventanaCliente, "Saldo: " + cuenta.getSaldo());
+        
+        d_ventanaCliente.dispose();
+    }//GEN-LAST:event_mi_revisarEstado_cuentaPropiaActionPerformed
+
+    private void mi_revisarTransacciones_cuentaPropiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_revisarTransacciones_cuentaPropiaActionPerformed
+        // Escoge el Cliente
+        String listaClientes = "";
+        for (Cliente cliente : adminCliente.clientes)
+            listaClientes += adminCliente.clientes.indexOf(cliente) + ". " + cliente.getPrimerNombre() + "\n";
+        int pos1 = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "CLIENTES\n" + listaClientes + "Ingrese la posición del Cliente:"));
+        Cliente cliente = adminCliente.getCliente(pos1);
+        
+        String TXs = "";
+        for (Transaccion TX : cliente.transacciones)
+            TXs += TX.getId() + ". " + TX.getNumero_cuenta() + ", " + TX.getDescripcion()+ ", " + TX.getFechaHora() + "\n";
+        JOptionPane.showMessageDialog(d_ventanaCliente, "TRANSACCIONES\n" + TXs);
+        
+        d_ventanaMantenimiento.dispose();
+    }//GEN-LAST:event_mi_revisarTransacciones_cuentaPropiaActionPerformed
+
+    private void b_ingresarBilletesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ingresarBilletesActionPerformed
+        int billetes100 = Integer.parseInt(tf_billetes100.getText());
+        int billetes500 = Integer.parseInt(tf_billetes500.getText());
+        int ingreso = billetes100 * 100 + billetes500 * 500;
+        atmSistema.setSaldo(atmSistema.getSaldo() + ingreso);
+        adminATM.escribir();
+        JOptionPane.showMessageDialog(d_ventanaMantenimiento, "El ingreso se realizó exitosamente.");
+        generarLogIngreso(maintenance.getPrimerNombre(), "Ingreso de Lps. " + ingreso + " en ATM " + atmSistema, l_hora6);
+    }//GEN-LAST:event_b_ingresarBilletesActionPerformed
     
     public void updateComboBoxATMs() {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
@@ -1071,6 +1235,71 @@ public class Main extends javax.swing.JFrame {
         for (ATM atm : adminATM.ATMs)
             modelo.addElement(atm);
         cb_ATMs.setModel(modelo);
+    }
+    
+    public void generarLogInicioSesion(String primerNombre, String descripcion, JLabel label) {
+        Date date = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
+        String fecha = formato.format(date);
+        String hora = label.getText();
+        String fechaHora = fecha + " - " + hora;
+        adminLogInicioSesion.logs.add(new Log(primerNombre, descripcion, fechaHora));
+        try {
+            adminLogInicioSesion.escribir();
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void generarLogFallo(String primerNombre, String descripcion, JLabel label) {
+        Date date = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
+        String fecha = formato.format(date);
+        String hora = label.getText();
+        String fechaHora = fecha + " - " + hora;
+        adminLogFallos.logs.add(new Log(primerNombre, descripcion, fechaHora));
+        try {
+            adminLogFallos.escribir();
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void generarLogIngreso(String primerNombre, String descripcion, JLabel label) {
+        Date date = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
+        String fecha = formato.format(date);
+        String hora = label.getText();
+        String fechaHora = fecha + " - " + hora;
+        adminLogIngresos.logs.add(new Log(primerNombre, descripcion, fechaHora));
+        try {
+            adminLogIngresos.escribir();
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void generarLogRetiro(String primerNombre, String descripcion, JLabel label) {
+        Date date = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
+        String fecha = formato.format(date);
+        String hora = label.getText();
+        String fechaHora = fecha + " - " + hora;
+        adminLogRetiros.logs.add(new Log(primerNombre, descripcion, fechaHora));
+        try {
+            adminLogRetiros.escribir();
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public String generarFechaHora(JLabel label) {
+        Date date = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
+        String fecha = formato.format(date);
+        String hora = label.getText();
+        String fechaHora = fecha + " - " + hora;
+        return fechaHora;
     }
     
     public static void main(String args[]) {
@@ -1144,6 +1373,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel l_hora3;
     private javax.swing.JLabel l_hora4;
     private javax.swing.JLabel l_hora5;
+    private javax.swing.JLabel l_hora6;
     private javax.swing.JLabel l_id;
     private javax.swing.JLabel l_id_usuario;
     private javax.swing.JLabel l_meses;
@@ -1196,6 +1426,10 @@ public class Main extends javax.swing.JFrame {
     AdminATM adminATM = new AdminATM("./ATMs.marh");
     AdminCliente adminCliente = new AdminCliente("./Clientes.marh");
     AdminMantenimiento adminMantenimiento = new AdminMantenimiento("./Mantenimientos.marh");
+    AdminLog adminLogInicioSesion = new AdminLog("./LogsInicioSesion.txt");
+    AdminLog adminLogFallos = new AdminLog("./LogsFallos.txt");
+    AdminLog adminLogRetiros = new AdminLog("./LogsRetiros.txt");
+    AdminLog adminLogIngresos = new AdminLog("./LogsIngresos.txt");
     
     Cliente client;
     int intentos = 5;

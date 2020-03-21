@@ -13,7 +13,7 @@ public class Usuario implements Serializable {
     protected String pwd;
     protected int aNacimiento;
     protected int aAfiliacion;
-    protected ArrayList<Transaccion> transacciones;
+    protected ArrayList<Transaccion> transacciones = new ArrayList();
     
     private static final long serialVersionUID = 222L;
 
@@ -89,7 +89,7 @@ public class Usuario implements Serializable {
     public Transaccion getTX(int i) {
         return transacciones.get(i);
     }
-    public void setTransaccion(Transaccion TX) {
+    public void addTX(Transaccion TX) {
         transacciones.add(TX);
     }
 
