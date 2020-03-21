@@ -21,6 +21,12 @@ public class Mantenimiento extends Usuario {
         ATMs.add(atm);
     }
 
+    public ArrayList<ATM> getATMs() {
+        return ATMs;
+    }
+    
+    
+
     @Override
     public String toString() {
         return "Usuario_Mantenimiento{" + "lista_Atm=" + ATMs + '}';

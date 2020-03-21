@@ -26,6 +26,21 @@ public class AdminATM {
     public void addATM(ATM atm) {
         ATMs.add(atm);
     }
+    //Lista Entera
+    public ArrayList<ATM> getATMs() {
+        return ATMs;
+    }
+    public void setATMs(ArrayList<ATM> ATMs) {
+        this.ATMs = ATMs;
+    }
+
+    public File getArchivo() {
+        return archivo;
+    }
+    public void setArchivo(File archivo) {
+        this.archivo = archivo;
+    }
+    
     
     public void escribir() {
         FileOutputStream fw = null;

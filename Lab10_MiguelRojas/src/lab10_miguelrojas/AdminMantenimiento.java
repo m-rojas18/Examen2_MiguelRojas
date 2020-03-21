@@ -26,6 +26,12 @@ public class AdminMantenimiento {
     public void addMantenimiento(Mantenimiento mantenimiento) {
         mantenimientos.add(mantenimiento);
     }
+
+    public ArrayList<Mantenimiento> getMantenimientos() {
+        return mantenimientos;
+    }
+    
+    
     
     public void escribir() {
         FileOutputStream fw = null;

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -16,21 +17,23 @@ public class Main extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         adminATM.cargar();
         updateComboBoxATMs();
+        updateComboBoxMantenimiento();
         adminCliente.cargar();
         adminMantenimiento.cargar();
         adminLogInicioSesion.cargar();
+        // Inicializar hilos de hora
         HiloHora h1 = new HiloHora(l_hora1);
         HiloHora h2 = new HiloHora(l_hora2);
         HiloHora h3 = new HiloHora(l_hora3);
         HiloHora h4 = new HiloHora(l_hora4);
         HiloHora h5 = new HiloHora(l_hora5);
-        HiloHora h6 = new HiloHora(l_hora5);
-        
+        HiloHora h6 = new HiloHora(l_hora6);
+
         Thread proceso_hora = new Thread(h1);
         Thread proceso_hora2 = new Thread(h2);
         Thread proceso_hora3 = new Thread(h3);
-        Thread proceso_hora4= new Thread(h4);
-        Thread proceso_hora5 = new Thread(h4);
+        Thread proceso_hora4 = new Thread(h4);
+        Thread proceso_hora5 = new Thread(h5);
         Thread proceso_hora6 = new Thread(h6);
         proceso_hora.start();
         proceso_hora2.start();
@@ -38,9 +41,24 @@ public class Main extends javax.swing.JFrame {
         proceso_hora4.start();
         proceso_hora5.start();
         proceso_hora6.start();
+        System.out.println("--Clientes--");
+        for (Cliente c : adminCliente.getClientes()) {
+            System.out.print("Nombre: " + c.getPrimerNombre() + "," + "Contraseña: " + c.getPwd() + "\n");
+        }
+
+        System.out.println("----------\nUsuarios de Mantenimiento");
+        for (Mantenimiento m : adminMantenimiento.getMantenimientos()) {
+            System.out.print("Nombre: " + m.getPrimerNombre() + "," + "Contraseña: " + m.getPwd() + "\n");
+            
+        }
         
+        System.out.println("------------\nID's de ATMs");
+        for (ATM a : adminATM.getATMs()) {
+            System.out.print("Ubicación: " +a.getUbicacion() +"," +  "ID: " + a.getID() + "\n");
+        }
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -100,6 +118,8 @@ public class Main extends javax.swing.JFrame {
         d_ventanaCliente = new javax.swing.JDialog();
         jPanel5 = new javax.swing.JPanel();
         l_hora5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         mb_acciones_ventanaCliente = new javax.swing.JMenuBar();
         m_retiro = new javax.swing.JMenu();
         mi_atm = new javax.swing.JMenuItem();
@@ -121,6 +141,8 @@ public class Main extends javax.swing.JFrame {
         tf_billetes500 = new javax.swing.JTextField();
         b_ingresarBilletes = new javax.swing.JButton();
         l_hora6 = new javax.swing.JLabel();
+        b_cerrarATM = new javax.swing.JButton();
+        cb_atm_Mantenimiento = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cb_ATMs = new javax.swing.JComboBox<>();
@@ -128,6 +150,8 @@ public class Main extends javax.swing.JFrame {
         b_crearATM_frame = new javax.swing.JButton();
         b_crearUsuario_frame = new javax.swing.JButton();
         l_hora1 = new javax.swing.JLabel();
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 51));
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel2.setText("Crear ATM");
@@ -227,6 +251,8 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 102));
 
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel3.setText("Crear Usuario");
@@ -384,6 +410,8 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 0));
+
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel4.setText("Iniciar Sesión");
 
@@ -479,28 +507,49 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel5.setBackground(new java.awt.Color(0, 255, 204));
+
+        l_hora5.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         l_hora5.setText("l_hora5");
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lab10_miguelrojas/babyYoda_icon.jpg"))); // NOI18N
+
+        jLabel8.setFont(new java.awt.Font("Copperplate", 1, 36)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Bienvenido al banco de diego!!!");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(485, Short.MAX_VALUE)
-                .addComponent(l_hora5)
+                .addGap(0, 91, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(85, 85, 85))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(l_hora5, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(283, 283, 283)
+                .addComponent(jLabel7)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(l_hora5)
-                .addContainerGap(244, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel7)
+                .addGap(37, 37, 37))
         );
 
         m_retiro.setText("Retiro");
 
-        mi_atm.setText("ATM");
+        mi_atm.setText("Retiro");
         mi_atm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mi_atmActionPerformed(evt);
@@ -585,6 +634,9 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel6.setBackground(new java.awt.Color(51, 255, 204));
+        jPanel6.setForeground(new java.awt.Color(51, 255, 255));
+
         jLabel5.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel5.setText("Mantenimiento");
 
@@ -601,6 +653,20 @@ public class Main extends javax.swing.JFrame {
 
         l_hora6.setText("l_hora6");
 
+        b_cerrarATM.setText("Cerrar ATM");
+        b_cerrarATM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_cerrarATMActionPerformed(evt);
+            }
+        });
+
+        cb_atm_Mantenimiento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ATMs Disponibles" }));
+        cb_atm_Mantenimiento.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_atm_MantenimientoItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -608,21 +674,31 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(b_ingresarBilletes)
+                        .addGap(40, 40, 40)
+                        .addComponent(b_cerrarATM, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(l_hora6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel6Layout.createSequentialGroup()
-                            .addComponent(l_billetes100)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(tf_billetes100, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel6Layout.createSequentialGroup()
-                            .addComponent(l_billetes500)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(tf_billetes500)))
-                    .addComponent(b_ingresarBilletes))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(l_billetes100)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tf_billetes100, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(l_billetes500)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tf_billetes500)))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(l_hora6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(68, 68, 68)
+                                .addComponent(cb_atm_Mantenimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 56, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -634,14 +710,17 @@ public class Main extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_billetes100)
-                    .addComponent(tf_billetes100, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_billetes100, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_atm_Mantenimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_billetes500)
                     .addComponent(tf_billetes500, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(b_ingresarBilletes)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(b_ingresarBilletes)
+                    .addComponent(b_cerrarATM))
+                .addGap(30, 30, 30))
         );
 
         javax.swing.GroupLayout d_ventanaMantenimientoLayout = new javax.swing.GroupLayout(d_ventanaMantenimiento.getContentPane());
@@ -760,19 +839,24 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_b_crearATM_frameActionPerformed
 
     private void b_crearUsuario_frameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_crearUsuario_frameActionPerformed
-        d_crearUsuario.setModal(true);
-        d_crearUsuario.pack();
-        d_crearUsuario.setLocationRelativeTo(this);
-        d_crearUsuario.setVisible(true);
+        if (adminATM.getATMs().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe crear un ATM para poder crear usuario.");
+        } else {
+            d_crearUsuario.setModal(true);
+            d_crearUsuario.pack();
+            d_crearUsuario.setLocationRelativeTo(this);
+            d_crearUsuario.setVisible(true);
+        }
+
     }//GEN-LAST:event_b_crearUsuario_frameActionPerformed
 
     private void b_crearATMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_crearATMActionPerformed
         // Crear el ATM
         String ubicacion = null, id_atm = null;
         int aFabricacion = 0, tiempoMantenimiento = 0;
-        
+
         boolean crearAtm = true;
-        
+
         // Verificar los datos ingresados
         // ubicación
         if (tf_ubicacion.getText().isEmpty()) {
@@ -781,7 +865,7 @@ public class Main extends javax.swing.JFrame {
         } else {
             ubicacion = tf_ubicacion.getText();
         }
-        
+
         if (tf_id_atm.getText().isEmpty()) {
             JOptionPane.showMessageDialog(d_crearATM, "Falta el ID");
             crearAtm = false;
@@ -802,7 +886,7 @@ public class Main extends javax.swing.JFrame {
                 crearAtm = false;
             }
         }
-        
+
         // año de fabricación
         if (tf_aFabricacion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(d_crearATM, "Falta el Año de Fabricación");
@@ -810,7 +894,7 @@ public class Main extends javax.swing.JFrame {
         } else {
             aFabricacion = Integer.parseInt(tf_aFabricacion.getText());
         }
-        
+
         // tiempo de mantenimiento
         if (tf_tiempoMantenimiento.getText().isEmpty()) {
             JOptionPane.showMessageDialog(d_crearATM, "Falta el Tiempo de Mantenimiento");
@@ -818,19 +902,20 @@ public class Main extends javax.swing.JFrame {
         } else {
             tiempoMantenimiento = Integer.parseInt(tf_tiempoMantenimiento.getText());
         }
-        
+
         if (crearAtm) {
             ATM atm = new ATM(ubicacion, id_atm, aFabricacion, tiempoMantenimiento);
             adminATM.addATM(atm);
             adminATM.escribir();
             updateComboBoxATMs();
+            updateComboBoxMantenimiento();
             JOptionPane.showMessageDialog(d_crearATM, "El ATM fue creado exitosamente.");
-            
+
             tf_ubicacion.setText("");
             tf_id_atm.setText("");
             tf_aFabricacion.setText("");
             tf_tiempoMantenimiento.setText("");
-            
+
             d_crearATM.dispose();
         }
     }//GEN-LAST:event_b_crearATMActionPerformed
@@ -839,9 +924,9 @@ public class Main extends javax.swing.JFrame {
         // Crear el Usuario
         String id = null, primerNombre = null, segundoNombre = null, primerApellido = null, segundoApellido = null, pwd = null;
         int aNacimiento = 0, aAfiliacion = 0;
-        
+
         boolean crearUsuario = true;
-        
+
         // Verificar los datos ingresados
         // id
         if (tf_id_usuario.getText().isEmpty()) {
@@ -850,7 +935,7 @@ public class Main extends javax.swing.JFrame {
         } else {
             id = tf_id_usuario.getText();
         }
-        
+
         // primerNombre
         if (tf_primerNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(d_crearUsuario, "Hace falta el Primer Nombre.");
@@ -858,7 +943,7 @@ public class Main extends javax.swing.JFrame {
         } else {
             primerNombre = tf_primerNombre.getText();
         }
-        
+
         // segundoNombre
         if (tf_segundoNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(d_crearUsuario, "Hace falta el Segundo Nombre.");
@@ -866,7 +951,7 @@ public class Main extends javax.swing.JFrame {
         } else {
             segundoNombre = tf_segundoNombre.getText();
         }
-        
+
         // primerApellido
         if (tf_primerApellido.getText().isEmpty()) {
             JOptionPane.showMessageDialog(d_crearUsuario, "Hace falta el Primer Apellido.");
@@ -874,7 +959,7 @@ public class Main extends javax.swing.JFrame {
         } else {
             primerApellido = tf_primerApellido.getText();
         }
-        
+
         // segundoApellido
         if (tf_segundoApellido.getText().isEmpty()) {
             JOptionPane.showMessageDialog(d_crearUsuario, "Hace falta el Segundo Apellido.");
@@ -882,7 +967,7 @@ public class Main extends javax.swing.JFrame {
         } else {
             segundoApellido = tf_segundoApellido.getText();
         }
-        
+
         // pwd
         if (pf_pwd.getText().isEmpty()) {
             JOptionPane.showMessageDialog(d_crearUsuario, "Hace falta la Contraseña.");
@@ -890,7 +975,7 @@ public class Main extends javax.swing.JFrame {
         } else {
             pwd = pf_pwd.getText();
         }
-        
+
         // aNacimiento
         if (tf_aNacimiento.getText().isEmpty()) {
             JOptionPane.showMessageDialog(d_crearUsuario, "Hace falta el Año de Nacimiento.");
@@ -898,7 +983,7 @@ public class Main extends javax.swing.JFrame {
         } else {
             aNacimiento = Integer.parseInt(tf_aNacimiento.getText());
         }
-        
+
         // aAfiliacion
         if (tf_aAfiliacion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(d_crearUsuario, "Hace falta el Año de Afiliación.");
@@ -906,57 +991,59 @@ public class Main extends javax.swing.JFrame {
         } else {
             aAfiliacion = Integer.parseInt(tf_aAfiliacion.getText());
         }
-        
+
         // tipo de usuario
         boolean tipoCliente = true;
-        if (!rb_cliente.isSelected())
+        if (!rb_cliente.isSelected()) {
             tipoCliente = false;
-        
+        }
+
         if (crearUsuario) {
             if (tipoCliente) {
                 // Crear (Usuario) Cliente
                 Cliente cliente = new Cliente(id, primerNombre, segundoNombre, primerApellido, segundoApellido, pwd, aNacimiento, aAfiliacion);
-                
+
                 // Agregar Cuentas
                 int resp = 0;
                 while (resp != 1) {
                     String num_cuenta = JOptionPane.showInputDialog(d_crearUsuario, "Ingrese el número de cuenta:");
                     int saldo = Integer.parseInt(JOptionPane.showInputDialog(d_crearUsuario, "Ingrese el saldo:"));
-                    
+
                     Cuenta cuenta = new Cuenta(num_cuenta, saldo, id);
                     cliente.addCuenta(cuenta);
                     JOptionPane.showMessageDialog(d_crearUsuario, "La Cuenta fue agregada exitosamente.");
-                    
+
                     resp = JOptionPane.showConfirmDialog(d_crearUsuario, "¿Desea agregar otra Cuenta?");
                 }
-                
+
                 adminCliente.addCliente(cliente);
                 adminCliente.escribir();
                 JOptionPane.showMessageDialog(d_crearUsuario, "El Cliente fue creado exitosamente.");
             } else {
                 // Crear (Usuario) Mantenimiento
                 Mantenimiento mantenimiento = new Mantenimiento(id, primerNombre, segundoNombre, primerApellido, segundoApellido, pwd, aNacimiento, aAfiliacion);
-                
+
                 // Agregar ATMs
                 String listaATMs = "";
-                for (ATM atm : adminATM.ATMs)
+                for (ATM atm : adminATM.ATMs) {
                     listaATMs += adminATM.ATMs.indexOf(atm) + ". " + atm + "\n";
-                
+                }
+
                 int resp = 0;
                 while (resp != 1) {
                     int pos = Integer.parseInt(JOptionPane.showInputDialog(d_crearUsuario, "ATMs\n" + listaATMs + "Ingrese la posición del ATM que desea agregar:"));
-                    
+
                     mantenimiento.addATM(adminATM.getATM(pos));
                     JOptionPane.showMessageDialog(d_crearUsuario, "El ATM fue agregado exitosamente.");
-                    
+
                     resp = JOptionPane.showConfirmDialog(d_crearUsuario, "¿Desea agregar otro ATM?");
                 }
-                
+
                 adminMantenimiento.addMantenimiento(mantenimiento);
                 adminMantenimiento.escribir();
                 JOptionPane.showMessageDialog(d_crearUsuario, "El Usuario de Mantenimiento fue creado exitosamente.");
             }
-            
+
             tf_id_usuario.setText("");
             tf_primerNombre.setText("");
             tf_segundoNombre.setText("");
@@ -965,7 +1052,7 @@ public class Main extends javax.swing.JFrame {
             pf_pwd.setText("");
             tf_aNacimiento.setText("");
             tf_aAfiliacion.setText("");
-            
+
             d_crearUsuario.dispose();
         }
     }//GEN-LAST:event_b_crearUsuarioActionPerformed
@@ -983,9 +1070,9 @@ public class Main extends javax.swing.JFrame {
 
     private void b_iniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_iniciarSesionActionPerformed
         String primerNombre = null, pwd = null;
-        
+
         boolean iniciarSesion = true;
-        
+
         // primerNombre
         if (tf_primerNombre_iniciarSesion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(d_iniciarSesion, "Hace falta el Primer Nombre.");
@@ -993,7 +1080,7 @@ public class Main extends javax.swing.JFrame {
         } else {
             primerNombre = tf_primerNombre_iniciarSesion.getText();
         }
-        
+
         // pwd
         if (pf_pwd_iniciarSesion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(d_iniciarSesion, "Hace falta la Contraseña.");
@@ -1001,12 +1088,13 @@ public class Main extends javax.swing.JFrame {
         } else {
             pwd = pf_pwd_iniciarSesion.getText();
         }
-        
+
         // tipo de usuario
         boolean tipoCliente = true;
-        if (!rb_cliente_iniciarSesion.isSelected())
+        if (!rb_cliente_iniciarSesion.isSelected()) {
             tipoCliente = false;
-        
+        }
+
         if (iniciarSesion) {
             if (tipoCliente) {
                 boolean encontroPN = false;
@@ -1021,18 +1109,19 @@ public class Main extends javax.swing.JFrame {
                             
                             // Generar log de inicio de sesión
                             generarLogInicioSesion(cliente.getPrimerNombre(), "Inicio de sesión exitoso", l_hora4);
-                            
+
                             tf_primerNombre_iniciarSesion.setText("");
                             pf_pwd_iniciarSesion.setText("");
-                            
+                            updateComboBoxMantenimiento();
                             d_iniciarSesion.dispose();
-                            
+                            JOptionPane.showMessageDialog(d_iniciarSesion, "Ingreso Exitosamente!!");
                             // Abrir la ventana de Cliente
+                            
                             d_ventanaCliente.setModal(true);
                             d_ventanaCliente.pack();
                             d_ventanaCliente.setLocationRelativeTo(d_iniciarSesion);
                             d_ventanaCliente.setVisible(true);
-                            
+
                             break;
                         } else {
                             JOptionPane.showMessageDialog(d_iniciarSesion, "La contraseña es incorrecta.");
@@ -1045,7 +1134,7 @@ public class Main extends javax.swing.JFrame {
                         }
                     }
                 }
-                
+
                 if (!encontroPN) {
                     JOptionPane.showMessageDialog(d_iniciarSesion, "No se encontró ningún Cliente con ese nombre.", "Iniciar Sesión - Cliente", JOptionPane.WARNING_MESSAGE);
                     tf_primerNombre_iniciarSesion.setText("");
@@ -1053,6 +1142,7 @@ public class Main extends javax.swing.JFrame {
                     generarLogFallo(primerNombre, "Usuario no encontrado", l_hora4);
                 }
             } else {
+
                 boolean encontroPN = false;
                 for (Mantenimiento mantenimiento : adminMantenimiento.mantenimientos) {
                     String pnMantenimiento = mantenimiento.getPrimerNombre();
@@ -1062,21 +1152,20 @@ public class Main extends javax.swing.JFrame {
                         if (pwd.equals(pwdMantenimiento)) {
                             maintenance = mantenimiento;
                             intentos = 5;
-                            
                             // Generar log de inicio de sesión
-                            generarLogInicioSesion(mantenimiento.getPrimerNombre(), "Inicio de sesión exitoso", l_hora4);
-                            
+                            generarLogInicioSesion(maintenance.getPrimerNombre(), "Inicio de sesión exitoso", l_hora4);
+
                             tf_primerNombre_iniciarSesion.setText("");
                             pf_pwd_iniciarSesion.setText("");
-            
+
                             d_iniciarSesion.dispose();
-                            
+                             JOptionPane.showMessageDialog(d_iniciarSesion, "Ingreso Exitosamente!!");
+
                             // Abrir la ventana de Mantenimiento
                             d_ventanaMantenimiento.setModal(true);
                             d_ventanaMantenimiento.pack();
                             d_ventanaMantenimiento.setLocationRelativeTo(d_iniciarSesion);
                             d_ventanaMantenimiento.setVisible(true);
-                            
                             break;
                         } else {
                             JOptionPane.showMessageDialog(d_iniciarSesion, "La contraseña es incorrecta.");
@@ -1088,101 +1177,115 @@ public class Main extends javax.swing.JFrame {
                             }
                         }
                     }
+
                 }
-                
+
                 if (!encontroPN) {
                     JOptionPane.showMessageDialog(d_iniciarSesion, "No se encontró ningún Usuario de Mantenimiento con ese nombre.", "Iniciar Sesión - Cliente", JOptionPane.WARNING_MESSAGE);
                     tf_primerNombre_iniciarSesion.setText("");
                     // Generar log por no haber encontrado ningún usuario con ese nombre
                     generarLogFallo(primerNombre, "Usuario no encontrado", l_hora4);
                 }
+
             }
         }
     }//GEN-LAST:event_b_iniciarSesionActionPerformed
 
     private void cb_ATMsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_ATMsItemStateChanged
         int posicion = cb_ATMs.getSelectedIndex() - 1;
-        
+
         if (posicion >= 0) {
             atmSistema = (ATM) cb_ATMs.getSelectedItem();
         }
     }//GEN-LAST:event_cb_ATMsItemStateChanged
 
     private void mi_atmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_atmActionPerformed
+        String cuentas = "";
+        for (Cuenta cuenta : client.cuentas) {
+            cuentas += client.cuentas.indexOf(cuenta) + ". " + cuenta + "\n";
+        }
+        int pos = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "CUENTAS\n" + cuentas + "Ingrese la posición de la cuenta a la que le quiere retirar dinero:"));
+        Cuenta cuenta = client.getCuenta(pos);
+        
         int retiro = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "Ingrese la cantidad de dinero que desea retirar:"));
-        if (atmSistema.getSaldo() < retiro) {
+        
+        if (cuenta.getSaldo() < retiro) {
             JOptionPane.showMessageDialog(d_ventanaCliente, "El saldo es insuficiente para realizar el retiro.", "Retiro", JOptionPane.INFORMATION_MESSAGE);
             // Generar log por fallo en la transacción
-            generarLogFallo(client.getPrimerNombre(), "Saldo insuficiente para realizar retiro en ATM " + atmSistema, l_hora5);
+            generarLogFallo(client.getPrimerNombre(), "Saldo insuficiente para realizar retiro ", l_hora5);
         } else {
-            atmSistema.setSaldo(atmSistema.getSaldo() - retiro);
-            adminATM.escribir();
+            cuenta.setSaldo(cuenta.getSaldo() - retiro);
+
             JOptionPane.showMessageDialog(d_ventanaCliente, "El retiro se realizó exitosamente.", "Retiro", JOptionPane.INFORMATION_MESSAGE);
             // Generar log por transacción exitosa
-            generarLogRetiro(client.getPrimerNombre(), "Retiro de Lps. " + retiro + " en ATM " + atmSistema, l_hora5);
+            generarLogRetiro(client.getPrimerNombre(), "Retiro de Lps. " + retiro + " de Cuenta " + cuenta.getNum_cuenta(), l_hora5);
             // Generar transacción
-            client.addTX(new Transaccion("N/A", "Retiro de Lps. " + retiro + " en ATM " + atmSistema, generarFechaHora(l_hora5), client.transacciones.size()));
+            client.addTX(new Transaccion("N/A", "Retiro de Lps. " + retiro + " de la Cuenta" + cuenta, generarFechaHora(l_hora5), client.transacciones.size()));
             adminCliente.escribir();
-            
+
             d_ventanaCliente.dispose();
         }
     }//GEN-LAST:event_mi_atmActionPerformed
 
     private void mi_cuentaPropiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_cuentaPropiaActionPerformed
         String cuentas = "";
-        for (Cuenta cuenta : client.cuentas)
+        for (Cuenta cuenta : client.cuentas) {
             cuentas += client.cuentas.indexOf(cuenta) + ". " + cuenta + "\n";
-        
+        }
+
         int pos = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "CUENTAS\n" + cuentas + "Ingrese la posición de la cuenta a la que le quiere depositar:"));
         Cuenta cuenta = client.getCuenta(pos);
-        
+
         int deposito = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "Ingrese la cantidad de dinero que desea depositar:"));
-        
+
         cuenta.setSaldo(cuenta.getSaldo() + deposito);
         adminCliente.escribir();
-        
+
         JOptionPane.showMessageDialog(d_ventanaCliente, "El depósito se realizó exitosamente.", "Depósito", JOptionPane.INFORMATION_MESSAGE);
         // Generar transacción
         client.addTX(new Transaccion(cuenta.getNum_cuenta(), "Depósito de Lps. " + deposito, generarFechaHora(l_hora5), client.transacciones.size()));
         adminCliente.escribir();
-        
+
         d_ventanaCliente.dispose();
     }//GEN-LAST:event_mi_cuentaPropiaActionPerformed
 
     private void mi_transferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_transferenciaActionPerformed
         // Escoge el Cliente
         String listaClientes = "";
-        for (Cliente cliente : adminCliente.clientes)
+        for (Cliente cliente : adminCliente.clientes) {
             listaClientes += adminCliente.clientes.indexOf(cliente) + ". " + cliente.getPrimerNombre() + "\n";
+        }
         int pos1 = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "CLIENTES\n" + listaClientes + "Ingrese la posición del Cliente al que le desea depositar:"));
         Cliente cliente = adminCliente.getCliente(pos1);
-        
+
         // Escoge una Cuenta del Cliente
         String listaCuentas = "";
-        for (Cuenta cuenta : cliente.cuentas)
+        for (Cuenta cuenta : cliente.cuentas) {
             listaCuentas += cliente.cuentas.indexOf(cuenta) + ". " + cuenta + "\n";
+        }
         int pos2 = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "CUENTAS\n" + listaCuentas + "Ingrese la posición de la cuenta a la que le desea depositar:"));
         Cuenta cuenta = client.getCuenta(pos2);
-        
+
         // Ingresa la cantidad a depositar
         int deposito = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "Ingrese la cantidad de dinero que desea depositar:"));
-        
+
         cuenta.setSaldo(cuenta.getSaldo() + deposito);
         adminCliente.escribir();
-        
+
         JOptionPane.showMessageDialog(d_ventanaCliente, "La transferencia se realizó exitosamente.", "Transferencia", JOptionPane.INFORMATION_MESSAGE);
         // Generar transacción
         client.addTX(new Transaccion(cuenta.getNum_cuenta(), "Transferencia de Lps. " + deposito, generarFechaHora(l_hora5), client.transacciones.size()));
         adminCliente.escribir();
-        
+
         d_ventanaCliente.dispose();
     }//GEN-LAST:event_mi_transferenciaActionPerformed
 
     private void mi_nuevaCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_nuevaCuentaActionPerformed
         // Escoge el Cliente
         String listaClientes = "";
-        for (Cliente cliente : adminCliente.clientes)
+        for (Cliente cliente : adminCliente.clientes) {
             listaClientes += adminCliente.clientes.indexOf(cliente) + ". " + cliente.getPrimerNombre() + "\n";
+        }
         int pos1 = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "CLIENTES\n" + listaClientes + "Ingrese la posición del Cliente al que le desea agregar Cuentas:"));
         Cliente cliente = adminCliente.getCliente(pos1);
 
@@ -1199,64 +1302,141 @@ public class Main extends javax.swing.JFrame {
         }
 
         adminCliente.escribir();
-        
+
         d_ventanaCliente.dispose();
     }//GEN-LAST:event_mi_nuevaCuentaActionPerformed
 
     private void mi_revisarEstado_cuentaPropiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_revisarEstado_cuentaPropiaActionPerformed
         // Escoge el Cliente
         String listaClientes = "";
-        for (Cliente cliente : adminCliente.clientes)
+        for (Cliente cliente : adminCliente.clientes) {
             listaClientes += adminCliente.clientes.indexOf(cliente) + ". " + cliente.getPrimerNombre() + "\n";
+        }
         int pos1 = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "CLIENTES\n" + listaClientes + "Ingrese la posición del Cliente:"));
         Cliente cliente = adminCliente.getCliente(pos1);
-        
+
         // Escoge una Cuenta del Cliente
         String listaCuentas = "";
-        for (Cuenta cuenta : cliente.cuentas)
+        for (Cuenta cuenta : cliente.cuentas) {
             listaCuentas += cliente.cuentas.indexOf(cuenta) + ". " + cuenta + "\n";
+        }
         int pos2 = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "CUENTAS\n" + listaCuentas + "Ingrese la posición de la cuenta:"));
         Cuenta cuenta = client.getCuenta(pos2);
-        
+
         JOptionPane.showMessageDialog(d_ventanaCliente, "Saldo: " + cuenta.getSaldo());
-        
+
         d_ventanaCliente.dispose();
     }//GEN-LAST:event_mi_revisarEstado_cuentaPropiaActionPerformed
 
     private void mi_revisarTransacciones_cuentaPropiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_revisarTransacciones_cuentaPropiaActionPerformed
         // Escoge el Cliente
         String listaClientes = "";
-        for (Cliente cliente : adminCliente.clientes)
+        for (Cliente cliente : adminCliente.clientes) {
             listaClientes += adminCliente.clientes.indexOf(cliente) + ". " + cliente.getPrimerNombre() + "\n";
+        }
         int pos1 = Integer.parseInt(JOptionPane.showInputDialog(d_ventanaCliente, "CLIENTES\n" + listaClientes + "Ingrese la posición del Cliente:"));
         Cliente cliente = adminCliente.getCliente(pos1);
-        
+
         String TXs = "";
-        for (Transaccion TX : cliente.transacciones)
-            TXs += TX.getId() + ". " + TX.getNumero_cuenta() + ", " + TX.getDescripcion()+ ", " + TX.getFechaHora() + "\n";
+        for (Transaccion TX : cliente.transacciones) {
+            TXs += TX.getId() + ". " + TX.getNumero_cuenta() + ", " + TX.getDescripcion() + ", " + TX.getFechaHora() + "\n";
+        }
         JOptionPane.showMessageDialog(d_ventanaCliente, "TRANSACCIONES\n" + TXs);
-        
+
         d_ventanaMantenimiento.dispose();
     }//GEN-LAST:event_mi_revisarTransacciones_cuentaPropiaActionPerformed
 
     private void b_ingresarBilletesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ingresarBilletesActionPerformed
-        int billetes100 = Integer.parseInt(tf_billetes100.getText());
-        int billetes500 = Integer.parseInt(tf_billetes500.getText());
-        int ingreso = billetes100 * 100 + billetes500 * 500;
-        atmSistema.setSaldo(atmSistema.getSaldo() + ingreso);
-        adminATM.escribir();
-        JOptionPane.showMessageDialog(d_ventanaMantenimiento, "El ingreso se realizó exitosamente.");
-        generarLogIngreso(maintenance.getPrimerNombre(), "Ingreso de Lps. " + ingreso + " en ATM " + atmSistema, l_hora6);
+        int billetes100 = 0, billetes500 = 0;
+        ATM atm_mantenimiento = null;
+        boolean ingresarBilletes = true;
+
+        // Validar datos ingresados
+        // Billetes de 100
+        if (tf_billetes100.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(d_ventanaMantenimiento, "Debe Ingresar la cantidad a ingresar de billetes de 100");
+            ingresarBilletes = false;
+        } else {
+            billetes100 = Integer.parseInt(tf_billetes100.getText());
+        }
+
+        //Billetes de 500
+        if (tf_billetes500.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(d_ventanaMantenimiento, "Debe Ingresar la cantidad a ingresar de billetes de 500");
+            ingresarBilletes = false;
+        } else {
+            billetes500 = Integer.parseInt(tf_billetes100.getText());
+        }
+
+        if (cb_atm_Mantenimiento.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(d_ventanaMantenimiento, "Debe Elegir un ATM");
+            ingresarBilletes = false;
+        } else {
+            atm_mantenimiento = (ATM)cb_atm_Mantenimiento.getSelectedItem();
+        }
+        boolean atm = false;
+        for (int i = 0; i < maintenance.getATMs().size(); i++) {
+            if (maintenance.getATMs().contains((ATM)cb_atm_Mantenimiento.getSelectedItem())) {
+                atm = true;
+                break;
+            } 
+        }
+
+        if (atm == true) {
+            if (ingresarBilletes) {
+                int ingreso = billetes100 * 100 + billetes500 * 500;
+                atmSistema.setSaldo(atm_mantenimiento.getSaldo() + ingreso);
+                adminATM.escribir();
+                JOptionPane.showMessageDialog(d_ventanaMantenimiento, "El ingreso se realizó exitosamente.");
+                generarLogIngreso(maintenance.getPrimerNombre(), "Ingreso de Lps. " + ingreso + " en ATM " + atmSistema, l_hora6);
+            }
+        } else {
+            JOptionPane.showMessageDialog(d_ventanaMantenimiento,"El Usuario no es elegible para ingresar billetes al ATM seleccionado.", "Error", JOptionPane.WARNING_MESSAGE);
+            generarLogFallo(maintenance.getPrimerNombre(),"El Usuario no es elegible para ingresar billetes al ATM seleccionado.",l_hora6 );
+        }
+
+
     }//GEN-LAST:event_b_ingresarBilletesActionPerformed
-    
+
+    private void b_cerrarATMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_cerrarATMActionPerformed
+
+        String clave = JOptionPane.showInputDialog(d_ventanaMantenimiento, "Ingrese la clave del ATM");
+        ATM a = (ATM)cb_atm_Mantenimiento.getSelectedItem();
+        if (clave.equals(a.getID())) {
+            JOptionPane.showMessageDialog(d_ventanaMantenimiento, "ATM cerrado exitosamente!!");
+            generarLogInicioSesion(maintenance.getPrimerNombre(), "Ha cerrado el ATM exitosamente", l_hora6);
+            tf_billetes100.setText("");
+            tf_billetes500.setText("");
+            d_ventanaMantenimiento.dispose();
+        } else {
+            JOptionPane.showMessageDialog(d_ventanaMantenimiento, "La Clave ingresada es incorrecta", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_b_cerrarATMActionPerformed
+
+    private void cb_atm_MantenimientoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_atm_MantenimientoItemStateChanged
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_cb_atm_MantenimientoItemStateChanged
+
     public void updateComboBoxATMs() {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         modelo.addElement("Seleccione un ATM");
-        for (ATM atm : adminATM.ATMs)
+        for (ATM atm : adminATM.ATMs) {
             modelo.addElement(atm);
+        }
         cb_ATMs.setModel(modelo);
     }
-    
+
+    public void updateComboBoxMantenimiento() {
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        modelo.addElement("Seleccione un ATM");
+        for (ATM atm : adminATM.ATMs) {
+            modelo.addElement(atm);
+        }
+        cb_atm_Mantenimiento.setModel(modelo);
+    }
+
     public void generarLogInicioSesion(String primerNombre, String descripcion, JLabel label) {
         Date date = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
@@ -1270,7 +1450,7 @@ public class Main extends javax.swing.JFrame {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void generarLogFallo(String primerNombre, String descripcion, JLabel label) {
         Date date = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
@@ -1284,7 +1464,7 @@ public class Main extends javax.swing.JFrame {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void generarLogIngreso(String primerNombre, String descripcion, JLabel label) {
         Date date = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
@@ -1298,7 +1478,7 @@ public class Main extends javax.swing.JFrame {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void generarLogRetiro(String primerNombre, String descripcion, JLabel label) {
         Date date = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
@@ -1312,7 +1492,7 @@ public class Main extends javax.swing.JFrame {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public String generarFechaHora(JLabel label) {
         Date date = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
@@ -1321,7 +1501,7 @@ public class Main extends javax.swing.JFrame {
         String fechaHora = fecha + " - " + hora;
         return fechaHora;
     }
-    
+
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -1357,6 +1537,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b_cerrarATM;
     private javax.swing.JButton b_crearATM;
     private javax.swing.JButton b_crearATM_frame;
     private javax.swing.JButton b_crearUsuario;
@@ -1367,6 +1548,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cb_ATMs;
+    private javax.swing.JComboBox<String> cb_atm_Mantenimiento;
     private javax.swing.JDialog d_crearATM;
     private javax.swing.JDialog d_crearUsuario;
     private javax.swing.JDialog d_iniciarSesion;
@@ -1377,6 +1559,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1450,10 +1634,12 @@ public class Main extends javax.swing.JFrame {
     AdminLog adminLogFallos = new AdminLog("./LogsFallos.txt");
     AdminLog adminLogRetiros = new AdminLog("./LogsRetiros.txt");
     AdminLog adminLogIngresos = new AdminLog("./LogsIngresos.txt");
+
     
     Cliente client;
     int intentos = 5;
     Mantenimiento maintenance;
     ATM atmSistema;
     
+    final ImageIcon icon = new ImageIcon("/Users/miguel/Desktop/Repositorio_Lab10/Examen2_MiguelRojas/Lab10_MiguelRojas/babyYoda_icon.jpg");
 }

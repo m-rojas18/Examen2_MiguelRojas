@@ -26,6 +26,12 @@ public class AdminCliente {
     public void addCliente(Cliente cliente) {
         clientes.add(cliente);
     }
+
+    public ArrayList<Cliente> getClientes() {
+        return clientes;
+    }
+    
+    
     
     public void escribir() {
         FileOutputStream fw = null;
