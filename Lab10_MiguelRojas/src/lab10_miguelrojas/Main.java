@@ -19,6 +19,26 @@ public class Main extends javax.swing.JFrame {
         adminCliente.cargar();
         adminMantenimiento.cargar();
         adminLogInicioSesion.cargar();
+        HiloHora h1 = new HiloHora(l_hora1);
+        HiloHora h2 = new HiloHora(l_hora2);
+        HiloHora h3 = new HiloHora(l_hora3);
+        HiloHora h4 = new HiloHora(l_hora4);
+        HiloHora h5 = new HiloHora(l_hora5);
+        HiloHora h6 = new HiloHora(l_hora5);
+        
+        Thread proceso_hora = new Thread(h1);
+        Thread proceso_hora2 = new Thread(h2);
+        Thread proceso_hora3 = new Thread(h3);
+        Thread proceso_hora4= new Thread(h4);
+        Thread proceso_hora5 = new Thread(h4);
+        Thread proceso_hora6 = new Thread(h6);
+        proceso_hora.start();
+        proceso_hora2.start();
+        proceso_hora3.start();
+        proceso_hora4.start();
+        proceso_hora5.start();
+        proceso_hora6.start();
+        
     }
     
     @SuppressWarnings("unchecked")
